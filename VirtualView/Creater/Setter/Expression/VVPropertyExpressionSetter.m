@@ -6,6 +6,7 @@
 //
 
 #import "VVPropertyExpressionSetter.h"
+#import "VVConfig.h"
 
 @interface VVPropertyExpressionSetter ()
 
@@ -64,6 +65,7 @@
             case STR_ID_layoutMarginLeft:
             case STR_ID_layoutMarginRight:
             case STR_ID_layoutMarginTop:
+            case STR_ID_layoutMargin:
             case STR_ID_layoutRatio:
             case STR_ID_layoutWidth:
             case STR_ID_lineSpaceExtra:
@@ -74,6 +76,7 @@
             case STR_ID_paddingLeft:
             case STR_ID_paddingRight:
             case STR_ID_paddingTop:
+            case STR_ID_padding:
             case STR_ID_paintWidth:
             case STR_ID_ratio:
             case STR_ID_textSize:
@@ -135,7 +138,10 @@
                 handled = [node setIntValue:[stringValue intValue] forKey:self.key];
                 break;
             case TYPE_FLOAT:
-                handled = [node setFloatValue:[stringValue floatValue] forKey:self.key];
+            {
+                CGFloat floatValue = [self calculateFloatValueWithString:stringValue];
+                handled = [node setFloatValue:floatValue forKey:self.key];
+            }
                 break;
             case TYPE_STRING:
                 handled = [node setStringValue:stringValue forKey:self.key];
@@ -201,6 +207,18 @@
         }
     }
     return gravity;
+}
+
+// 非字面量形式在xml赋值的value，如果以 ${value} + 字符串 形式，就需要手动处理
+- (CGFloat)calculateFloatValueWithString:(NSString *)stringValue {
+    if ([stringValue isEqualToString:@"match_parent"]) return VV_MATCH_PARENT;
+    if ([stringValue isEqualToString:@"wrap_content"]) return VV_WRAP_CONTENT;
+    
+    // 不同的单位处理
+    if ([stringValue hasSuffix:@"rp"]) {
+        return [stringValue floatValue] * VVConfig.pointRatio;
+    }
+    return [stringValue floatValue];
 }
 
 @end

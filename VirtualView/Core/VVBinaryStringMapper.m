@@ -52,7 +52,7 @@
             @"size", @"Slider", @"span", @"src", @"stayTime", @"style", @"supportHTMLStyle", @"supportSticky",
             @"tag", @"text", @"textColor", @"textSize", @"textStyle", @"this", @"TMNImage", @"TMVImage",
             @"type", @"typeface", @"uuid", @"var", @"VGraph", @"VH", @"VH2Layout", @"VHLayout", @"VImage",
-            @"visibility", @"VLine", @"vList", @"VText", @"VTime", @"waterfall", @"while"
+            @"visibility", @"VLine", @"vList", @"VText", @"VTime", @"waterfall", @"while", @"layoutMargin", @"padding"
 #ifdef VV_ALIBABA
             , @"height", @"marginBottom", @"marginLeft", @"marginRight", @"marginTop", @"videoInfo",
             @"VVNavtiveViewContainer", @"width"

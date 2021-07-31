@@ -124,31 +124,17 @@
     self.scrollView.frame = self.view.bounds;
     CGFloat viewWidth = CGRectGetWidth(self.view.bounds);
     CGSize size = CGSizeMake(viewWidth, 1000);
+    [self.container updateData:self.data];
     size = [self.container estimatedSize:size];
     self.scrollView.contentSize = size;
     self.container.frame = CGRectMake(0, 0, size.width, size.height);
-    [self.container update:self.data];
+    [self.container updateLayout];
 }
 
-//#pragma mark - VirtualViewDelegate
-//
-//- (void)virtualView:(VVViewObject *)virtualView clickWithAction:(NSString *)action bindData:(NSDictionary *)bindData {
-//    NSLog(@"click: %@, %@, %@, %@", virtualView, action, bindData, virtualView.tag);
-//    [ASCProgressHUD showText:action];
-//
-//    NSURL *url = [NSURL URLWithString:action];
-//    if (url) {
-//        if ([url.absoluteString hasPrefix:@"http"]) {
-//            SFSafariViewController *safariVC = [[SFSafariViewController alloc] initWithURL:url];
-//            [self presentViewController:safariVC animated:YES completion:nil];
-//        }else{
-//            [[UIApplication sharedApplication] openURL:url];
-//        }
-//    }
-//}
-//
-//- (void)virtualView:(VVViewObject *)virtualView longPressedWithGesture:(UILongPressGestureRecognizer *)gesture {
-//    NSLog(@"long press: %@", virtualView);
-//}
+#pragma mark - VirtualViewDelegate
+
+- (void)virtualView:(VVBaseNode *)node clickedWithAction:(NSString *)action andValue:(NSString *)value {
+    NSLog(@"click: %@, %@", action, value);
+}
 
 @end

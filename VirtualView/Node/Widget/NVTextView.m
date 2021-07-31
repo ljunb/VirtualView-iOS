@@ -7,6 +7,7 @@
 
 #import "NVTextView.h"
 #import "UIColor+VirtualView.h"
+#import "VVViewContainer.h"
 
 @implementation VVLabel
 
@@ -16,16 +17,44 @@
     [super drawTextInRect:UIEdgeInsetsInsetRect(rect, padding)];
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(label:touchesBegan:withEvent:)]) {
+        [self.delegate label:self touchesBegan:touches withEvent:event];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(label:touchesEnded:withEvent:)]) {
+        [self.delegate label:self touchesEnded:touches withEvent:event];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(label:touchesBegan:withEvent:)]) {
+        [self.delegate label:self touchesBegan:touches withEvent:event];
+    }
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(label:touchesEnded:withEvent:)]) {
+        [self.delegate label:self touchesEnded:touches withEvent:event];
+    }
+}
+
 @end
 
 //################################################################
 
 #pragma mark -
 
-@interface NVTextView ()
+#define BeanDataBorderColorKey @"borderColor"
+
+@interface NVTextView ()<VVLabelDelegate>
 
 @property (nonatomic, strong, readwrite) NSAttributedString *attributedText;
 @property (nonatomic, strong) NSDictionary *style;
+
+@property (nonatomic, strong) UIColor *prevColor;
 
 @end
 
@@ -292,6 +321,12 @@
                 ret = NO;
                 break;
         }
+    } else {
+        // 如果是 flag 属性，设置交互使能
+        if (key == STR_ID_flag) {
+            self.textView.delegate = self;
+            self.textView.userInteractionEnabled = self.containsClickable;
+        }
     }
     return ret;
 }
@@ -305,6 +340,10 @@
             case STR_ID_textSize:
                 self.textSize = value;
                 break;
+            case STR_ID_borderTopLeftRadius:
+            case STR_ID_borderTopRightRadius:
+            case STR_ID_borderBottomRightRadius:
+            case STR_ID_borderBottomLeftRadius:
             case STR_ID_borderRadius:
                 self.textView.layer.cornerRadius = value;
                 self.textView.clipsToBounds = YES;
@@ -404,8 +443,13 @@
         }
         [self applyAutoDim];
     }
+    
+    BOOL isChangedText = ![self.textView.text isEqualToString:self.text];
+    // 没有宽高，或是文本发生变化时，都重新进行文本大小的计算
     if ((self.nodeWidth <= 0 && self.layoutWidth == VV_WRAP_CONTENT)
-        || (self.nodeHeight <= 0 && self.layoutHeight == VV_WRAP_CONTENT)) {
+        || (self.nodeHeight <= 0 && self.layoutHeight == VV_WRAP_CONTENT)
+        || isChangedText) {
+        
         if (self.nodeWidth <= 0) {
             self.nodeWidth = maxSize.width - self.marginLeft - self.marginRight;
         }
@@ -414,6 +458,10 @@
         }
         
         CGSize contentSize = self.contentSize;
+        // 文本改变了，用最多size去计算内容宽高。不然长文本复用短文本后，self.contentSize 有误
+        if (isChangedText) {
+            contentSize = CGSizeMake(maxSize.width, maxSize.height);
+        }
         contentSize = [self calcContentSize:contentSize];
         
         if (self.layoutWidth == VV_WRAP_CONTENT) {

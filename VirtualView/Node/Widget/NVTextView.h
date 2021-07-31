@@ -8,7 +8,18 @@
 #import <UIKit/UIKit.h>
 #import "VVBaseNode.h"
 
+@class VVLabel;
+
+@protocol VVLabelDelegate <NSObject>
+
+- (void)label:(VVLabel *)label touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+- (void)label:(VVLabel *)label touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
+
+@end
+
 @interface VVLabel : UILabel
+
+@property (nonatomic, weak) id<VVLabelDelegate> delegate;
 
 @property (nonatomic, assign) CGFloat paddingLeft;
 @property (nonatomic, assign) CGFloat paddingTop;

@@ -166,7 +166,54 @@
         if (self.nodeHeight <= 0) {
             self.nodeHeight = maxSize.height - self.marginTop - self.marginBottom;
         }
+        
+        // -------- ↓ fix RatioLayout 设置 layoutHeight="wrap_content" 无法正常显示的问题 ↓ --------
+        CGSize contentSize = self.contentSize;
+        // Calculate size of subNodes.
+        CGFloat maxSubNodeWidth = 0, maxSubNodeHeight = 0; // maximum container size of subNodes
+        CGFloat totalWidth = 0, totolHeight = 0; // sum of subNodes's container size
+        for (VVBaseNode *subNode in self.subNodes) {
+            if (subNode.visibility == VVVisibilityGone) {
+                continue;
+            }
+            [subNode calculateSize:contentSize];
+            CGSize subNodeContainerSize = subNode.containerSize;
+            if (subNode.layoutWidth != VV_MATCH_PARENT) {
+                maxSubNodeWidth = MAX(maxSubNodeWidth, subNodeContainerSize.width);
+            }
+            if (subNode.layoutHeight != VV_MATCH_PARENT) {
+                maxSubNodeHeight = MAX(maxSubNodeHeight, subNodeContainerSize.height);
+            }
+            totalWidth += subNodeContainerSize.width;
+            totolHeight += subNodeContainerSize.height;
+        }
+        
+        if (self.layoutWidth == VV_WRAP_CONTENT) {
+            if (_orientation == VVOrientationVertical) {
+                self.nodeWidth = maxSubNodeWidth + self.paddingLeft + self.paddingRight;
+            } else {
+                self.nodeWidth = totalWidth + self.paddingLeft + self.paddingRight;
+            }
+        }
+        if (self.layoutHeight == VV_WRAP_CONTENT) {
+            if (_orientation == VVOrientationVertical) {
+                self.nodeHeight = totolHeight + self.paddingTop + self.paddingBottom;
+            } else {
+                self.nodeHeight = maxSubNodeHeight + self.paddingTop + self.paddingBottom;
+            }
+        }
+        
         [self applyAutoDim];
+        
+        // Need to resize subNodes.
+        self.updatingNeedsResize = YES;
+        for (VVBaseNode *subNodes in self.subNodes) {
+            if ([subNodes needResizeIfSuperNodeResize]) {
+                [subNodes setNeedsResize];
+            }
+        }
+        self.updatingNeedsResize = NO;
+        // -------- end --------
     }
     return CGSizeMake(self.nodeWidth, self.nodeHeight);
 }

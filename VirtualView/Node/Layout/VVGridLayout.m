@@ -20,7 +20,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _colCount = 2;
+        _colCount = 3;
     }
     return self;
 }
@@ -32,6 +32,7 @@
 
 - (int)rowCount
 {
+    if (_colCount == 1) { return (int)self.subNodes.count; }
     return ((int)self.subNodes.count + 1) / _colCount;
 }
 

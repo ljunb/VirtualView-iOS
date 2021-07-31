@@ -308,6 +308,12 @@
         case STR_ID_paddingBottom:
             self.paddingBottom = value;
             break;
+        case STR_ID_padding:
+            self.paddingTop = value;
+            self.paddingRight = value;
+            self.paddingBottom = value;
+            self.paddingLeft = value;
+            break;
         case STR_ID_layoutMarginLeft:
             self.marginLeft = value;
             break;
@@ -319,6 +325,12 @@
             break;
         case STR_ID_layoutMarginBottom:
             self.marginBottom = value;
+            break;
+        case STR_ID_layoutMargin:
+            self.marginTop = value;
+            self.marginRight = value;
+            self.marginBottom = value;
+            self.marginLeft = value;
             break;
         case STR_ID_layoutRatio:
             self.layoutRatio = value;

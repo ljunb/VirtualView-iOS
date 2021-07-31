@@ -133,7 +133,9 @@
             [subNode updateHiddenRecursively];
             continue;
         }
-        CGSize subNodeSize = [subNode calculateSize:contentSize];
+        
+        CGSize subMaxContentSize = CGSizeMake(contentSize.width - currentX, contentSize.height);
+        CGSize subNodeSize = [subNode calculateSize:subMaxContentSize];
         if ([subNode needLayout]) {
             subNode.nodeX = currentX + subNode.marginLeft;
             currentX += subNode.containerSize.width;

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,8 +16,8 @@
 		0D5DD7782084D51C009B8490 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5DD76E2084D51C009B8490 /* SettingsViewController.m */; };
 		0D5DD7792084D51C009B8490 /* HotReloadService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5DD76F2084D51C009B8490 /* HotReloadService.m */; };
 		0D5DD77A2084D51C009B8490 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5DD7702084D51C009B8490 /* ScanViewController.m */; };
-		0D5DD77B2084D51C009B8490 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5DD7712084D51C009B8490 /* MainViewController.m */; };
 		2F354170710DAFE68CE7BA25 /* libPods-RealtimePreview.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B5A196C3443B0A64D8C649 /* libPods-RealtimePreview.a */; };
+		AA831737265261ED00EFE262 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA831736265261ED00EFE262 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,6 @@
 		0D5DD76E2084D51C009B8490 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		0D5DD76F2084D51C009B8490 /* HotReloadService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotReloadService.m; sourceTree = "<group>"; };
 		0D5DD7702084D51C009B8490 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
-		0D5DD7712084D51C009B8490 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		0D5DD7722084D51C009B8490 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		0D5DD7732084D51C009B8490 /* HotReloadService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotReloadService.h; sourceTree = "<group>"; };
 		0D5DD7742084D51C009B8490 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -41,6 +40,7 @@
 		0D5DD7762084D51C009B8490 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5A2C550267F6D1B7ECC0BDAF /* Pods-RealtimePreview.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealtimePreview.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview.release.xcconfig"; sourceTree = "<group>"; };
 		925388E9D3744616212F5274 /* Pods-RealtimePreview.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealtimePreview.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview.debug.xcconfig"; sourceTree = "<group>"; };
+		AA831736265261ED00EFE262 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E4B5A196C3443B0A64D8C649 /* libPods-RealtimePreview.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RealtimePreview.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -77,6 +77,7 @@
 		0D5DD7452084CC4C009B8490 /* RealtimePreview */ = {
 			isa = PBXGroup;
 			children = (
+				AA4B9B212578B4AB00D1FC8E /* Resources */,
 				0D5DD76C2084D51C009B8490 /* Classes */,
 				0D5DD7462084CC4C009B8490 /* AppDelegate.h */,
 				0D5DD7472084CC4C009B8490 /* AppDelegate.m */,
@@ -96,12 +97,12 @@
 				0D5DD76E2084D51C009B8490 /* SettingsViewController.m */,
 				0D5DD76F2084D51C009B8490 /* HotReloadService.m */,
 				0D5DD7702084D51C009B8490 /* ScanViewController.m */,
-				0D5DD7712084D51C009B8490 /* MainViewController.m */,
 				0D5DD7722084D51C009B8490 /* TestViewController.h */,
 				0D5DD7732084D51C009B8490 /* HotReloadService.h */,
 				0D5DD7742084D51C009B8490 /* SettingsViewController.h */,
 				0D5DD7752084D51C009B8490 /* ScanViewController.h */,
 				0D5DD7762084D51C009B8490 /* MainViewController.h */,
+				AA831736265261ED00EFE262 /* MainViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -123,6 +124,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AA4B9B212578B4AB00D1FC8E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA8316DD26524A9B00EFE262 /* JSONData */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AA8316DD26524A9B00EFE262 /* JSONData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = JSONData;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,7 +150,6 @@
 				0D5DD73F2084CC4C009B8490 /* Sources */,
 				0D5DD7402084CC4C009B8490 /* Frameworks */,
 				0D5DD7412084CC4C009B8490 /* Resources */,
-				2BC85AB8D97543351DED230E /* [CP] Embed Pods Frameworks */,
 				97787F9F1D9423260E93FA5C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -191,37 +206,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2BC85AB8D97543351DED230E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		97787F9F1D9423260E93FA5C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/../Pods/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview-resources.sh",
-				"${PODS_ROOT}/XLForm/XLForm/XLForm.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RealtimePreview/Pods-RealtimePreview-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB2881DD9D7C7EA1D966BA3E /* [CP] Check Pods Manifest.lock */ = {
@@ -253,7 +252,7 @@
 				0D5DD77A2084D51C009B8490 /* ScanViewController.m in Sources */,
 				0D5DD7562084CC4D009B8490 /* main.m in Sources */,
 				0D5DD7792084D51C009B8490 /* HotReloadService.m in Sources */,
-				0D5DD77B2084D51C009B8490 /* MainViewController.m in Sources */,
+				AA831737265261ED00EFE262 /* MainViewController.m in Sources */,
 				0D5DD7482084CC4C009B8490 /* AppDelegate.m in Sources */,
 				0D5DD7782084D51C009B8490 /* SettingsViewController.m in Sources */,
 			);
@@ -397,13 +396,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y2E9AM7RN7;
 				INFOPLIST_FILE = RealtimePreview/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RealtimePreview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xpeng.RealtimePreview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -415,13 +415,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y2E9AM7RN7;
 				INFOPLIST_FILE = RealtimePreview/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.alibaba.RealtimePreview;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xpeng.RealtimePreview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

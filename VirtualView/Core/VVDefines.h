@@ -180,6 +180,8 @@ typedef NS_ENUM(NSUInteger, VVLineStyle) {
 #define STR_ID_textSize  -1003668786
 #define STR_ID_textStyle  -1048634236
 #define STR_ID_visibility  1941332754
+#define STR_ID_padding -806339567
+#define STR_ID_layoutMargin 1697244536
 
 #define STR_ID_ck  3176
 #define STR_ID_inMainThread  999999

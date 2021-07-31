@@ -17,12 +17,16 @@
 #define VV_IMAGE_VIEW_TYPE UIImageView
 #endif
 
+
+static NSString *const kXTImageBeanClassSupportBeanGray = @"beanGrey";
+
 @interface NVImageView () {
     VV_IMAGE_VIEW_TYPE *_imageView;
 }
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, assign) BOOL needReload;
+@property (nonatomic, strong) NSMutableDictionary *grayImgCacheMap;
 
 @end
 
@@ -38,6 +42,7 @@
         _imageView.contentMode = UIViewContentModeScaleToFill;
         _scaleType = VVScaleTypeFitXY;
         _needReload = YES;
+        _grayImgCacheMap = [NSMutableDictionary dictionary];
         VVSelectorObserve(paddingTop, updatePadding);
         VVSelectorObserve(paddingLeft, updatePadding);
         VVSelectorObserve(paddingBottom, updatePadding);
@@ -217,6 +222,7 @@
 - (BOOL)setStringValue:(NSString *)value forKey:(int)key
 {
     BOOL ret  = [super setStringValue:value forKey:key];
+    
     if (!ret) {
         ret = YES;
         switch (key) {
@@ -228,6 +234,7 @@
                 break;
         }
     }
+    
     return ret;
 }
 
@@ -243,16 +250,38 @@
 - (void)updateFrame
 {
     [super updateFrame];
-    if (self.needReload) {
-        if (self.src && self.src.length > 0) {
-            if ([self.src containsString:@"//"]) {
-                [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.src]];
+    
+    if (!self.needReload) { return; }
+    if (!self.src || self.src.length == 0) { return; }
+    
+    if ([self.src hasPrefix:@"http"]) {
+        // 包含了 beanGrey
+        if (self.className && [self.className isEqualToString:kXTImageBeanClassSupportBeanGray]) {
+            UIImage *grayImage = [self.grayImgCacheMap objectForKey:self.src];
+            if (grayImage) {
+                self.imageView.image = grayImage;
             } else {
-                self.imageView.image = [UIImage imageNamed:self.src];
+                __weak typeof(self) weakSelf = self;
+                [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.src] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    if (!error && image && [imageURL.absoluteString isEqualToString:strongSelf.src]) {
+                        [strongSelf asyncConvertToGreyImage:image completion:^(UIImage *grayImage) {
+                            if (grayImage) {
+                                [strongSelf.grayImgCacheMap setObject:grayImage forKey:strongSelf.src];
+                                strongSelf.imageView.image = grayImage;
+                            }
+                        }];
+                    }
+                }];
             }
+        } else {
+            [self.imageView sd_setImageWithURL:[NSURL URLWithString:self.src]];
         }
-        self.needReload = NO;
+    } else {
+        self.imageView.image = [UIImage imageNamed:self.src];
     }
+    
+    self.needReload = NO;
 }
 
 - (CGSize)calculateSize:(CGSize)maxSize
@@ -268,6 +297,32 @@
         }
     }
     return CGSizeMake(self.nodeWidth, self.nodeHeight);
+}
+
+// 将原图置灰
+- (void)asyncConvertToGreyImage:(UIImage *)originImage completion:(void(^)(UIImage *))completion {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        int bitmapInfo = kCGImageAlphaPremultipliedLast;
+        int width = originImage.size.width;
+        int height = originImage.size.height;
+        
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+        CGContextRef context = CGBitmapContextCreate(nil, width, height, 8, 0, colorSpace, bitmapInfo);
+        CGColorSpaceRelease(colorSpace);
+        
+        if (context == NULL) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                !completion ?: completion(nil);
+            });
+        }
+        
+        CGContextDrawImage(context, CGRectMake(0, 0, width, height), originImage.CGImage);
+        UIImage *resultImage = [UIImage imageWithCGImage:CGBitmapContextCreateImage(context)];
+        CGContextRelease(context);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            !completion ?: completion(resultImage);
+        });
+    });
 }
 
 @end
